@@ -3,7 +3,7 @@ package org.epsi.Boulangerie.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name="CLIENT",uniqueConstraints = {@UniqueConstraint(columnNames = { "id" })})
+@Table(name="CLIENT",uniqueConstraints = {@UniqueConstraint(columnNames = { "CLIENT_ID" })})
 public class Client {
 
 	private int id;
@@ -17,6 +17,8 @@ public class Client {
 		this.telephone = telephone;
 	}
 
+	public Client() {
+	}
 
 	@Id
 	@Column(name = "CLIENT_ID")
@@ -39,7 +41,24 @@ public class Client {
 		return telephone;
 	}
 
-	
-	
+	public void setId(int id) {
+		this.id = id;
+	}
 
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	@Override
+	public String toString() {
+		return this.nom + " " + this.prenom + " (" + this.telephone + ")";
+	}
 }

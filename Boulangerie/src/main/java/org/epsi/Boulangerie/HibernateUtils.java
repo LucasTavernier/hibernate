@@ -6,6 +6,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 
+import java.io.File;
+
 public class HibernateUtils {
 
     private static final SessionFactory sessionFactory = buildSessionFactory();
@@ -15,7 +17,7 @@ public class HibernateUtils {
         try {
             // Create the ServiceRegistry from hibernate.cfg.xml
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()//
-                    .configure("hibernate.cfg.xml").build();
+                    .configure(new File("src/main/java/hibernate.cfg.xml")).build();
 
             // Create a metadata sources using the specified service registry.
             Metadata metadata = new MetadataSources(serviceRegistry).getMetadataBuilder().build();

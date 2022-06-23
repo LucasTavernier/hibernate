@@ -3,7 +3,7 @@ package org.epsi.Boulangerie.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name="PRODUIT",uniqueConstraints = {@UniqueConstraint(columnNames = { "id" })})
+@Table(name="PRODUIT",uniqueConstraints = {@UniqueConstraint(columnNames = { "PRODUIT_ID" })})
 public class Produit {
 
     private int id;
@@ -14,6 +14,9 @@ public class Produit {
         this.id = id;
         this.libelle = libelle;
         this.prix = prix;
+    }
+
+    public Produit() {
     }
 
     @Id
@@ -30,5 +33,22 @@ public class Produit {
     @Column(name = "PRODUIT_PRIX", length = 6, nullable = false)
     public double getPrix() {
         return prix;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+
+    @Override
+    public String toString() {
+        return this.libelle + " (" + this.prix + "€)";
     }
 }

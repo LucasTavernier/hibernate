@@ -12,16 +12,16 @@ import java.util.List;
 public class CommandeQueries {
 
     public static List<Commande> getCommandesByClient(Session session, int clientId) {
-        String sql = "Select * from " + Commande.class.getName() + " c "//
-                + " where c.CLNT_ID= :clientId;";
+        String sql = "Select c from " + Commande.class.getName() + " c "
+                + " where c.client.id= :clientId";
         Query<Commande> query = session.createQuery(sql);
         query.setParameter("clientId", clientId);
         return query.getResultList();
     }
 
     public static Commande getLastCommande(Session session, int clientId) {
-        String sql = "Select * from " + Commande.class.getName() + " c "//
-                + " where c.CLNT_ID= :clientId order by COMMANDE_DATE DESC";
+        String sql = "Select c from " + Commande.class.getName() + " c "//
+                + " where c.client.id= :clientId order by COMMANDE_DATE DESC";
         Query<Commande> query = session.createQuery(sql);
         query.setMaxResults(1);
         query.setParameter("clientId", clientId);
@@ -32,13 +32,18 @@ public class CommandeQueries {
         SessionFactory factory = HibernateUtils.getSessionFactory();
 
         Session session = factory.getCurrentSession();
+        session.getTransaction().begin();
 
 
-        Client client1 = new Client(0,"Tavernier", "Lucas","0102030405");
+        //Commande laDerniereCommande = getLastCommande(session, 0);
+        List<Commande> commandesDuClient = getCommandesByClient(session, 0);
+        session.getTransaction().commit();
 
-        Commande laDerniereCommande = getLastCommande(session, client1.getId());
+        for(Commande c : commandesDuClient){
+            System.out.println(c.toString());
+        }
 
-        List<Commande> toutesMesCommandes = getCommandesByClient(session, client1.getId());
+        session.close();
 
     }
 }
